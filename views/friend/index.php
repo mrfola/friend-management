@@ -29,6 +29,8 @@ use yii\bootstrap4\ActiveForm;
                             <tr>
                                 <td>SN</td>
                                 <td>Friends</td>
+                                <td>Email</td>
+                                <td>Phone Number</td>
                                 <td>Type</td>
                                 <td></td>
                                 <td></td>
@@ -45,6 +47,8 @@ use yii\bootstrap4\ActiveForm;
                             <tr>
                                 <td><?= $i; ?></td>
                                 <td><?= $friend->name; ?></td>
+                                <td><?= $friend->email; ?></td>
+                                <td><?= $friend->phone_number; ?></td>
                                 <td><?= $friend->type; ?></td>
                                 <td>
                                 <?php
