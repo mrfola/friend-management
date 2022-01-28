@@ -61,7 +61,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getFriends()
     {
-        return $this->hasMany(Friends::className(), ['user_id' => 'id']);
+        return $this->hasMany(Friend::className(), ['user_id' => 'id']);
     }
 
     //Implementation of IdentityInterface
@@ -88,6 +88,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function validateAuthKey($auth_key)
     {
         return $this->auth_key === $auth_key;
+    }
+
+    public static function getAuthUser()
+    {
+        $auth_user = Yii::$app->user;
+        if(!$auth_user)
+        {
+            return null;
+        }
+
+        return self::findOne($auth_user->id);
     }
 
     public static function findByEmail($email)

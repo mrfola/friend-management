@@ -1,3 +1,8 @@
+<?php
+
+use yii\bootstrap4\ActiveForm;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +15,11 @@
     <h1>Friends</h1>
     <div class="body">
 
-        <?php if($todos)
+        <?php if(!$friends)
+        {
+           echo" <p>You have no friends. You live a pretty boring life.</p>";
+
+        }else
         {
         ?>
             <div class="todos">
@@ -19,8 +28,8 @@
                         <thead>
                             <tr>
                                 <td>SN</td>
-                                <td>Todo</td>
-                                <td>Completed</td>
+                                <td>Friends</td>
+                                <td>Type</td>
                                 <td></td>
                                 <td></td>
                             </tr>
@@ -29,23 +38,23 @@
                         <tbody>
                             <?php
                             $i = 0;
-                                foreach($todos as $todo)
+                                foreach($friends as $friend)
                                 { 
                                     $i += 1;
                             ?>
                             <tr>
                                 <td><?= $i; ?></td>
-                                <td><?= $todo->todo; ?></td>
-                                <td><?= $todo->isComplete ? 'Completed' : 'Not Completed'; ?></td>
+                                <td><?= $friend->name; ?></td>
+                                <td><?= $friend->type; ?></td>
                                 <td>
                                 <?php
                                     ActiveForm::begin([
-                                            'action' => ['todo/edit'],
+                                            'action' => ['friend/edit'],
                                             'method' => 'get',
                                         ]);
                                 ?>
 
-                                        <input type="hidden" name="id" value="<?=$todo['id'];?>">
+                                        <input type="hidden" name="id" value="<?=$friend['id'];?>">
                                         <button class='btn btn-primary' type="submit">Edit</button>
                                     </form>
                                     <?php
@@ -55,11 +64,11 @@
                                 <td> 
                                 <?php
                                     ActiveForm::begin([
-                                            'action' => ['todo/destroy'],
+                                            'action' => ['friend/destroy'],
                                             'method' => 'post',
                                         ]);
                                 ?>
-                                        <input type="hidden" name="id" value="<?=$todo['id'];?>">
+                                        <input type="hidden" name="id" value="<?=$friend['id'];?>">
 
                                         <!-- Add confirmation pop-up -->
                                         <button type="submit" class='btn btn-danger' >Delete</button>
@@ -78,28 +87,33 @@
             </div>
 
             <?php 
-                }else
-                {
-            ?>
-                <p>You have no item in your todo list.</p>
-            <?php
                 }
             ?>
 
             <div class="add-todo">
                 <?php
                     ActiveForm::begin([
-                            'action' => ['todo/create'],
+                            'action' => ['friend/store'],
                             'method' => 'post',
                         ]);
                 ?>
                     <div class="form-row">
                         <div class="form-group">
                             <!-- CSRF Protection -->
-                            <input type="text" class="form-input" name="todo" required placeholder="Wash dishes"/>
+                            <input type="text" class="form-input" name="name" required placeholder="Katerine"/>
+                            <input type="email" class="form-input" name="email" required placeholder="Katerine@me.com"/>
+                            <input type="text" class="form-input" name="phone_number" required placeholder="080-000-0000"/>
+
+                            <select type="text" name="type">
+                                <option value="Acquintance">Acquintance</option>
+                                <option value="Friends">Friends</option>
+                                <option value="Close Friends">Close Friends</option>
+                                <option value="Best Friends">Best Friends</option>
+                            </select>
+
                         </div>
                         <div class="form-group">
-                            <button class="form-submit btn btn-primary" type="submit">Add Todo</button>
+                            <button class="form-submit btn btn-primary" type="submit">Add friend</button>
                         </div>
                     </div>
                 <?php
@@ -108,6 +122,6 @@
             </div>
 
         </div>
-        
+
 </body>
 </html>

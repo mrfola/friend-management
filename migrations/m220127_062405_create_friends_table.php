@@ -19,6 +19,7 @@ class m220127_062405_create_friends_table extends Migration
             'user_id' => $this->integer(),
             'name' => $this->string(100)->notNull(),
             'email' => $this->string(100)->notNull(),
+            'type' => $this->string(100)->notNull(),
             'phone_number' => $this->string(100)->notNull(),
             'created_at' =>  $this->datetime()->defaultValue(Date('Y-m-d H:i:s')),
             'updated_at' =>  $this->datetime()->defaultValue(Date('Y-m-d H:i:s')),

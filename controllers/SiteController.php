@@ -130,7 +130,7 @@ class SiteController extends Controller
         $user->attributes = $request;
         if ($user->login())
         {
-            return $this->redirect(['friends/index']);
+            return $this->redirect(['friend/index']);
 
         }else
         {
