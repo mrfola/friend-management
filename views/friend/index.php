@@ -1,5 +1,4 @@
 <?php
-
 use yii\bootstrap4\ActiveForm;
 ?>
 
@@ -29,7 +28,7 @@ use yii\bootstrap4\ActiveForm;
         }else
         {
         ?>
-            <table class="table">
+            <table class="friendsTable">
                 <thead>
                     <tr>
                         <td>SN</td>
@@ -49,21 +48,29 @@ use yii\bootstrap4\ActiveForm;
                         { 
                             $i += 1;
                     ?>
-                    <tr>
-                        <td><?= $i; ?></td>
-                        <td><?= $friend->name; ?></td>
-                        <td><?= $friend->email; ?></td>
-                        <td><?= $friend->phone_number; ?></td>
-                        <td><?= $friend->type; ?></td>
-                        <td>
+                    <tr class = "<?='friend-input'.$friend->id; ?> mb-4">
                         <?php
                             ActiveForm::begin([
-                                    'action' => ['friend/edit'],
-                                    'method' => 'get',
+                                    'action' => ['friend/update'],
+                                    'method' => 'post',
                                 ]);
                         ?>
+                        <td><?= $i; ?></td>
+                        <td><input class="form-control" disabled required type="text" name="name" value="<?=$friend->name;?>"></td>
+                        <td><input class="form-control" disabled required type="text" name="email" value="<?=$friend->email;?>"></td>
+                        <td><input class="form-control" disabled required type="text" name="phone_number" value="<?=$friend->phone_number;?>"></td>
+                        <td>
+                            <select class="form-control" disabled required type="text" name="type">
+                                <option value="Acquintance" <?= ($friend['type'] == "Acquintance")? "selected='selected'" : '' ?>>Acquintance</option>
+                                <option value="Friends" <?= ($friend['type'] == "Friends")? "selected='selected'" : '' ?>>Friends</option>
+                                <option value="Close Friends" <?= ($friend['type'] == "Close Friends")? "selected='selected'" : '' ?>>Close Friends</option>
+                                <option value="Best Friends" <?= ($friend['type'] == "Best Friends")? "selected='selected'" : '' ?>>Best Friends</option>
+                            </select>
+                        </td>
+                        <td>
                                 <input type="hidden" name="id" value="<?=$friend['id'];?>">
-                                <button class='btn btn-primary' type="submit">Edit</button>
+                                <input type="button" class="btn btn-primary" id="edit-button" locator-class="<?='friend-input'.$friend->id; ?>" value="Edit">
+                                <button class='btn btn-primary' id="update-button" style="display:none;">Update</button>
                         <?php
                             ActiveForm::end();
                         ?>
@@ -181,8 +188,11 @@ use yii\bootstrap4\ActiveForm;
         </div>
     </div>
 
-  
-
-
+    <?php
+        $this->registerJsFile(
+            '@web/js/main.js',
+            ['depends' => [\yii\web\JqueryAsset::class]]
+        );
+    ?>
 </body>
 </html>

@@ -71,15 +71,6 @@ class FriendController extends Controller
 
     }
 
-    public function actionEdit()
-    {
-        $request = Yii::$app->request->get();
-        $id = $request['id'];
-
-        $friend = Friend::findOne($id);
-        return $this->render('update', ["friend" => $friend]);
-    }
-
     public function actionUpdate()
     {
         $request = Yii::$app->request->post();
