@@ -15,7 +15,7 @@ use yii\bootstrap4\ActiveForm;
     <div class="row mb-4">
         <h1 class="col-8">Friends</h1>
         <!-- Trigger Add Friends -->
-        <button type="button" class="btn btn-primary px-4" data-toggle="modal" data-target="#exampleModal">
+        <button type="button" class="btn btn-primary px-4" data-toggle="modal" data-target="#addFriendModal">
         Add Friend
         </button>   
     </div>
@@ -75,16 +75,50 @@ use yii\bootstrap4\ActiveForm;
                                     'method' => 'post',
                                 ]);
                         ?>
-                                <input type="hidden" name="id" value="<?=$friend['id'];?>">
-
-                                <!-- Add confirmation pop-up -->
-                                <button type="submit" class='btn btn-danger' >Delete</button>
+                            <input type="hidden" name="id" value="<?=$friend['id'];?>">
+                            <!-- Add confirmation pop-up -->
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteFriendModal<?=$friend['id'];?>" data-id="<?=$friend['id'];?>">
+                                Delete
+                            </button>  
                         <?php
                             ActiveForm::end();
                         ?>
                         </td>
 
                     </tr>
+
+                    <!-- Delete Friends Modal -->
+                    <div class="modal fade" id="deleteFriendModal<?=$friend['id'];?>" tabindex="-1" aria-labelledby="deleteFriend" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="deleteFriend<?=$friend['id'];?>">Delete Friend</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <?php
+                                ActiveForm::begin([
+                                    'action' => ['friend/destroy'],
+                                    'method' => 'post',
+                                ]);
+                                ?>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete this friend: <?= $friend->name; ?>?</p>
+                                    <input type="hidden" name="id" value="<?=$friend['id'];?>">
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                    <button type="submit" class="btn btn-danger">Yes</button>
+                                </div>
+
+                            <?php
+                                ActiveForm::end();
+                            ?>
+                            </div>
+                        </div>
+                    </div>
 
                     <?php } ?>
                 </tbody>
@@ -93,19 +127,14 @@ use yii\bootstrap4\ActiveForm;
             <?php 
                 }
             ?>
-
-            <div class="add-friend">
-                
-            </div>
-
         </div>
 
     <!-- Add Friends Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addFriendModal" tabindex="-1" aria-labelledby="addFriend" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Friend</h5>
+                <h5 class="modal-title" id="addFriend">Add Friend</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
@@ -139,20 +168,21 @@ use yii\bootstrap4\ActiveForm;
                             <option value="Best Friends">Best Friends</option>
                         </select>
                     </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Add Friend</button>
-                    </div>
                 </div>
             </div>
-            
-                <?php
-                    ActiveForm::end()
-                ?>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Add Friend</button>
+            </div>
+            <?php
+                ActiveForm::end()
+            ?>
             
         </div>
     </div>
+
+  
+
 
 </body>
 </html>
